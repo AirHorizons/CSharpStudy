@@ -1,6 +1,0 @@
-C:\Users\야도란\Documents\Visual Studio 2015\Projects\CSstudy\Week01\Week01\bin\Debug\Week01.exe.config
-C:\Users\야도란\Documents\Visual Studio 2015\Projects\CSstudy\Week01\Week01\bin\Debug\Week01.exe
-C:\Users\야도란\Documents\Visual Studio 2015\Projects\CSstudy\Week01\Week01\bin\Debug\Week01.pdb
-C:\Users\야도란\Documents\Visual Studio 2015\Projects\CSstudy\Week01\Week01\obj\Debug\Week01.csprojResolveAssemblyReference.cache
-C:\Users\야도란\Documents\Visual Studio 2015\Projects\CSstudy\Week01\Week01\obj\Debug\Week01.exe
-C:\Users\야도란\Documents\Visual Studio 2015\Projects\CSstudy\Week01\Week01\obj\Debug\Week01.pdb
