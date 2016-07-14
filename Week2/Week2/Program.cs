@@ -12,8 +12,13 @@ namespace Week2
         {
             try
             {
-                Hanoi hanoi = new Hanoi();
-                hanoi.Run();
+                while (true) { 
+                    Console.Write("원판의 개수를 입력하세요(0이면 종료): ");
+                    int n = Convert.ToInt32(Console.ReadLine());
+                    if (n == 0) return;
+                    Hanoi hanoi = new Hanoi(n);
+                    hanoi.Run();
+                }
             }
             catch (WrongInputException e)
             {

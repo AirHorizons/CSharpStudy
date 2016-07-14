@@ -11,11 +11,10 @@ namespace Week2
         private HanoiTower[] towers;
         public int NumOfDisks { get; private set; }
         public int Turns { get; private set; }
-        public Hanoi()
-        {
-            Console.Write("원판의 개수를 입력하세요: ");
-            this.NumOfDisks = Convert.ToInt32(Console.ReadLine());
-            if (NumOfDisks <= 0) throw new WrongInputException("0 이하의 숫자는 입력할 수 없습니다.");
+        public Hanoi(int n)
+        {        
+            this.NumOfDisks = n;
+            if (NumOfDisks < 0) throw new WrongInputException("0 보다 작은 숫자는 입력할 수 없습니다.");
             towers = new HanoiTower[3];
 
             for (int i=0; i<towers.Length; i++)
