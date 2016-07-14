@@ -15,6 +15,7 @@ namespace Week2
         {
             Console.Write("원판의 개수를 입력하세요: ");
             this.NumOfDisks = Convert.ToInt32(Console.ReadLine());
+            if (NumOfDisks <= 0) throw new WrongInputException("0 이하의 숫자는 입력할 수 없습니다.");
             towers = new HanoiTower[3];
 
             for (int i=0; i<towers.Length; i++)

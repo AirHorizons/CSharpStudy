@@ -10,8 +10,16 @@ namespace Week2
     {
         static void Main(string[] args)
         {
-            Hanoi hanoi = new Hanoi();
-            hanoi.Run();
+            try
+            {
+                Hanoi hanoi = new Hanoi();
+                hanoi.Run();
+            }
+            catch (WrongInputException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
         }
     }
 }
