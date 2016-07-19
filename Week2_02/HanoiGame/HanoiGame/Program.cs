@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Week2
+namespace HanoiGame
 {
     class Program
     {
@@ -12,7 +12,8 @@ namespace Week2
         {
             try
             {
-                while (true) { 
+                while (true)
+                {
                     Console.Write("원판의 개수를 입력하세요(0이면 종료): ");
                     int n = Convert.ToInt32(Console.ReadLine());
                     if (n == 0) return;
@@ -22,11 +23,6 @@ namespace Week2
                 }
             }
             catch (WrongInputException e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
-            }
-            catch(FormatException e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
