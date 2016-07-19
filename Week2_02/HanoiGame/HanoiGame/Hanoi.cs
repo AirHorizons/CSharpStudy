@@ -32,6 +32,8 @@ namespace HanoiGame
                 MoveDisk();
                 Turns += 1;
             }
+            Console.Clear();
+            Draw(false);
             Console.WriteLine("축하합니다! {0}회만에 원판을 모두 옮겼습니다!", Turns);
             if (Turns == Math.Pow(2, NumOfDisks) - 1) Console.WriteLine("최저 횟수로 옮기는 데 성공하였습니다!");
         }
@@ -160,20 +162,24 @@ namespace HanoiGame
             {
                 for (int j = 0; j < towers.Length; j++)
                 {
-                    Console.Write(DrawDisk(NumOfDisks, towers[j].Disks[i]));
+                    Console.Write(DrawDisk(NumOfDisks, towers[j].Disks[i], mode, towers[j].Selected, i == towers[j].getheight()-1));
                 }
                 Console.Write("\n");
             }
             Console.Write("\n");
         }
-        private string DrawDisk(int n, int diskSize)
+        private string DrawDisk(int n, int diskSize, bool mode, bool selected, bool top)
         {
             string str = "";
             for (int i = 0; i < 2 * n + 1; i++)
             {
                 if (i == n) str += "|";
                 else if (i < n - diskSize || i > n + diskSize) str += " ";
-                else str += "*";
+                else
+                {
+                    if (mode && selected && top) str += "o";
+                    else str += "*";
+                }
             }
             str += "\t";
             return str;

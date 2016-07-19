@@ -21,6 +21,7 @@ namespace HanoiGame
                 return n;
             }
         }
+        public int getheight() { return height; }
         public bool Empty
         {
             get { return Disks[0] == 0; }
