@@ -16,16 +16,20 @@ namespace HanoiGame
 엔터 키로 원판을 고르거나 내려놓고, 좌우 방향키로 원판을 옮깁니다.
 ");
                 while (true)
-                {                   
+                {
                     Console.Write("원판의 개수를 입력하세요(0이면 종료): ");
                     int n = Convert.ToInt32(Console.ReadLine());
-                    if (n == 0) return;
+                    if (n == 0) return; // exit game
                     Hanoi hanoi = new Hanoi(n);
                     hanoi.Run();
-                    //Console.Clear();
                 }
             }
-            catch (WrongInputException e)
+            catch (WrongInputException e) // number input is less than 0
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+            catch (FormatException e) // get non-number input or empty string
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
