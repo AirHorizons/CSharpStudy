@@ -12,8 +12,11 @@ namespace HanoiGame
         {
             try
             {
+                Console.WriteLine(@"하노이 탑 게임입니다.
+엔터 키로 원판을 고르거나 내려놓고, 좌우 방향키로 원판을 옮깁니다.
+");
                 while (true)
-                {
+                {                   
                     Console.Write("원판의 개수를 입력하세요(0이면 종료): ");
                     int n = Convert.ToInt32(Console.ReadLine());
                     if (n == 0) return;
