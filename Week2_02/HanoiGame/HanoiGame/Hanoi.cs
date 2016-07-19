@@ -28,7 +28,7 @@ namespace HanoiGame
         {
             while(!(towers[0].Empty && towers[1].Empty))
             {
-                SelectTower();
+                SelectTower(); 
                 MoveDisk();
                 Turns += 1;
             }
@@ -47,7 +47,12 @@ namespace HanoiGame
                 key = Console.ReadKey();
                 if (key.Key == ConsoleKey.LeftArrow) { MoveCursorLeft(); }
                 else if (key.Key == ConsoleKey.RightArrow) { MoveCursorRight(); }
-                else if (key.Key == ConsoleKey.Enter) return;
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    if (!towers[TowerSelected].Empty)
+                        return;
+                    else continue;
+                }
             }            
         }
         private void MoveDisk()
