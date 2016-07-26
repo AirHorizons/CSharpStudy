@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{27CD7DB3-6474-4197-B8EF-32EBE837C877}</ProjectGuid>
+    <ProjectGuid>{06D6B774-D13C-4F01-977D-C3B3DB7D7B16}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TextAdventure</RootNamespace>
-    <AssemblyName>TextAdventure</AssemblyName>
+    <RootNamespace>Week4_Sandbox</RootNamespace>
+    <AssemblyName>Week4_Sandbox</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,12 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cell.cs" />
-    <Compile Include="GameWorld.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vector2i.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
