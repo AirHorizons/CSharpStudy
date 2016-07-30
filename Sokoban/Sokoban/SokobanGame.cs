@@ -9,7 +9,8 @@ namespace Sokoban
     class SokobanGame
     {
         public Tile[][] Map; // Wall: X, player: P, box: B, slot: o, Filled Slot: O
-        public List<Entity> EntityList;
+        public Player player;
+        public List<Block> BlockList;
         public int Row { get; private set; }
         public int Col { get; private set; }
         public Vector2i PlayerPos;
@@ -48,27 +49,27 @@ namespace Sokoban
             Console.Clear();
             if (dir == 'u')
             {
-                Tile UpTile = getTileByInt(PlayerPos.x - 1, PlayerPos.y);
-                Tile UpUpTile = getTileByInt(PlayerPos.x - 2, PlayerPos.y);
+                Tile UpTile = getTileByInt(player.pos.x - 1, player.pos.y);
+                Tile UpUpTile = getTileByInt(player.pos.x - 2, player.pos.y);
                 if (UpTile == null) return;
                 else
                 {
                     if (!(UpTile is Wall)&& !UpTile.onBox)
                     {
-                        Map[PlayerPos.x][PlayerPos.y].onPlayer = false;
-                        PlayerPos.x -= 1;
-                        Map[PlayerPos.x][PlayerPos.y].onPlayer = true;
+                        Map[player.pos.x][player.pos.y].onPlayer = false;
+                        player.pos.x -= 1;
+                        Map[player.pos.x][player.pos.y].onPlayer = true;
                         Turn += 1;
                     }
                     else if (!(UpTile is Wall) && UpTile.onBox)
                     {
                         if (UpUpTile != null && !(UpUpTile is Wall) && !UpUpTile.onBox )
                         {
-                            Map[PlayerPos.x-1][PlayerPos.y].onBox = false;
-                            Map[PlayerPos.x - 2][PlayerPos.y].onBox = true;
-                            Map[PlayerPos.x][PlayerPos.y].onPlayer = false;
-                            PlayerPos.x -= 1;
-                            Map[PlayerPos.x][PlayerPos.y].onPlayer = true;
+                            Map[player.pos.x-1][player.pos.y].onBox = false;
+                            Map[player.pos.x - 2][player.pos.y].onBox = true;
+                            Map[player.pos.x][player.pos.y].onPlayer = false;
+                            player.pos.x -= 1;
+                            Map[player.pos.x][player.pos.y].onPlayer = true;
                             Turn += 1;
                         }
                     }
@@ -76,27 +77,27 @@ namespace Sokoban
             }
             else if (dir == 'd')
             {
-                Tile DownTile = getTileByInt(PlayerPos.x + 1, PlayerPos.y);
-                Tile DownDownTile = getTileByInt(PlayerPos.x + 2, PlayerPos.y);
+                Tile DownTile = getTileByInt(player.pos.x + 1, player.pos.y);
+                Tile DownDownTile = getTileByInt(player.pos.x + 2, player.pos.y);
                 if (DownTile == null) return;
                 else
                 {
                     if (!(DownTile is Wall) && !DownTile.onBox)
                     {
-                        Map[PlayerPos.x][PlayerPos.y].onPlayer = false;
-                        PlayerPos.x += 1;
-                        Map[PlayerPos.x][PlayerPos.y].onPlayer = true;
+                        Map[player.pos.x][player.pos.y].onPlayer = false;
+                        player.pos.x += 1;
+                        Map[player.pos.x][player.pos.y].onPlayer = true;
                         Turn += 1;
                     }
                     else if (!(DownTile is Wall) && DownTile.onBox)
                     {
                         if (DownDownTile != null && !(DownDownTile is Wall) && !DownDownTile.onBox)
                         {
-                            Map[PlayerPos.x + 1][PlayerPos.y].onBox = false;
-                            Map[PlayerPos.x + 2][PlayerPos.y].onBox = true;
-                            Map[PlayerPos.x][PlayerPos.y].onPlayer = false;
-                            PlayerPos.x += 1;
-                            Map[PlayerPos.x][PlayerPos.y].onPlayer = true;
+                            Map[player.pos.x + 1][player.pos.y].onBox = false;
+                            Map[player.pos.x + 2][player.pos.y].onBox = true;
+                            Map[player.pos.x][player.pos.y].onPlayer = false;
+                            player.pos.x += 1;
+                            Map[player.pos.x][player.pos.y].onPlayer = true;
                             Turn += 1;
                         }
                     }
@@ -104,27 +105,27 @@ namespace Sokoban
             }
             else if (dir == 'l')
             {
-                Tile LeftTile = getTileByInt(PlayerPos.x, PlayerPos.y-1);
-                Tile LeftLeftTile = getTileByInt(PlayerPos.x , PlayerPos.y-2);
+                Tile LeftTile = getTileByInt(player.pos.x, player.pos.y-1);
+                Tile LeftLeftTile = getTileByInt(player.pos.x , player.pos.y-2);
                 if (LeftTile == null) return;
                 else
                 {
                     if (!(LeftTile is Wall) && !LeftTile.onBox)
                     {
-                        Map[PlayerPos.x][PlayerPos.y].onPlayer = false;
-                        PlayerPos.y -= 1;
-                        Map[PlayerPos.x][PlayerPos.y].onPlayer = true;
+                        Map[player.pos.x][player.pos.y].onPlayer = false;
+                        player.pos.y -= 1;
+                        Map[player.pos.x][player.pos.y].onPlayer = true;
                         Turn += 1;
                     }
                     else if (!(LeftTile is Wall) && LeftTile.onBox)
                     {
                         if (LeftLeftTile != null && !(LeftLeftTile is Wall) && !LeftLeftTile.onBox)
                         {
-                            Map[PlayerPos.x][PlayerPos.y - 1].onBox = false;
-                            Map[PlayerPos.x][PlayerPos.y - 2].onBox = true;
-                            Map[PlayerPos.x][PlayerPos.y].onPlayer = false;
-                            PlayerPos.y -= 1;
-                            Map[PlayerPos.x][PlayerPos.y].onPlayer = true;
+                            Map[player.pos.x][player.pos.y - 1].onBox = false;
+                            Map[player.pos.x][player.pos.y - 2].onBox = true;
+                            Map[player.pos.x][player.pos.y].onPlayer = false;
+                            player.pos.y -= 1;
+                            Map[player.pos.x][player.pos.y].onPlayer = true;
                             Turn += 1;
                         }
                     }
@@ -132,27 +133,27 @@ namespace Sokoban
             }
             else if (dir == 'r')
             {
-                Tile RightTile = getTileByInt(PlayerPos.x, PlayerPos.y + 1);
-                Tile RightRightTile = getTileByInt(PlayerPos.x, PlayerPos.y + 2);
+                Tile RightTile = getTileByInt(player.pos.x, player.pos.y + 1);
+                Tile RightRightTile = getTileByInt(player.pos.x, player.pos.y + 2);
                 if (RightTile == null) return;
                 else
                 {
                     if (!(RightTile is Wall) && !RightTile.onBox)
                     {
-                        Map[PlayerPos.x][PlayerPos.y].onPlayer = false;
-                        PlayerPos.y += 1;
-                        Map[PlayerPos.x][PlayerPos.y].onPlayer = true;
+                        Map[player.pos.x][player.pos.y].onPlayer = false;
+                        player.pos.y += 1;
+                        Map[player.pos.x][player.pos.y].onPlayer = true;
                         Turn += 1;
                     }
                     else if (!(RightTile is Wall) && RightTile.onBox)
                     {
                         if (RightRightTile != null && !(RightRightTile is Wall) && !RightRightTile.onBox)
                         {
-                            Map[PlayerPos.x][PlayerPos.y + 1].onBox = false;
-                            Map[PlayerPos.x][PlayerPos.y + 2].onBox = true;
-                            Map[PlayerPos.x][PlayerPos.y].onPlayer = false;
-                            PlayerPos.y += 1;
-                            Map[PlayerPos.x][PlayerPos.y].onPlayer = true;
+                            Map[player.pos.x][player.pos.y + 1].onBox = false;
+                            Map[player.pos.x][player.pos.y + 2].onBox = true;
+                            Map[player.pos.x][player.pos.y].onPlayer = false;
+                            player.pos.y += 1;
+                            Map[player.pos.x][player.pos.y].onPlayer = true;
                             Turn += 1;
                         }
                     }
@@ -199,7 +200,12 @@ namespace Sokoban
                     char tile = mapdata[i][j];
                     if (tile == 'X') Map[i][j] = new Wall();
                     else if (tile == ' ') Map[i][j] = new Floor();
-                    else if (tile == 'P') { Map[i][j] = new Floor(false, true); PlayerPos.x = i; PlayerPos.y = j; }
+                    else if (tile == 'P')
+                    {
+                        Map[i][j] = new Floor(false, true);
+                        player = new Player(i, j);
+                        player.pos.x = i; player.pos.y = j;
+                    }
                     else if (tile == 'B') Map[i][j] = new Floor(true, false);
                     else if (tile == 'o') Map[i][j] = new Slot();
                     else if (tile == 'O') Map[i][j] = new Slot(true, false);
