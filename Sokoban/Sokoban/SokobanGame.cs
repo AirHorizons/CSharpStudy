@@ -9,6 +9,7 @@ namespace Sokoban
     class SokobanGame
     {
         public Tile[][] Map; // Wall: X, player: P, box: B, slot: o, Filled Slot: O
+        public List<Entity> EntityList;
         public int Row { get; private set; }
         public int Col { get; private set; }
         public Vector2i PlayerPos;
@@ -16,8 +17,8 @@ namespace Sokoban
 
         public SokobanGame()
         {
-            string[] testmap = { "XXXXX", "X  oX", "XPB X", "X   X", "XXXXX" };
-            ScanMap(5, 5, testmap);
+            string[] testmap = { "XXXXXXX", "X    oX", "XPBB  X", "X    oX", "XXXXXXX" };
+            ScanMap(5, 7, testmap);
         }
 
 
