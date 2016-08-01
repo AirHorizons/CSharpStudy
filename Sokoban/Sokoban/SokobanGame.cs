@@ -8,12 +8,11 @@ namespace Sokoban
 {
     class SokobanGame
     {
-        public Tile[][] Map; // Wall: X, player: P, box: B, slot: o, Filled Slot: O
+        public Tile[,] Map; // Wall: X, player: P, box: B, slot: o, Filled Slot: O
         public Player player;
-        public List<Block> BlockList;
+        public List<Block> BlockList = new List<Block>();
         public int Row { get; private set; }
         public int Col { get; private set; }
-        public Vector2i PlayerPos;
         public int Turn { get; private set; }
 
         public SokobanGame()
@@ -25,7 +24,6 @@ namespace Sokoban
 
         public void Run()
         {
-            Console.WriteLine("SokobanGame!");
             PrintMap();
             while (!isClear())
             {                
@@ -47,6 +45,8 @@ namespace Sokoban
         public void Move(char dir)
         {
             Console.Clear();
+            int px = player.pos.x;
+            int py = player.pos.y;
             if (dir == 'u')
             {
                 Tile UpTile = getTileByInt(player.pos.x - 1, player.pos.y);
@@ -54,22 +54,17 @@ namespace Sokoban
                 if (UpTile == null) return;
                 else
                 {
-                    if (!(UpTile is Wall)&& !UpTile.onBox)
-                    {
-                        Map[player.pos.x][player.pos.y].onPlayer = false;
+                    if (!(UpTile is Wall)&& !FindBlock(px-1, py))
+                    {                       
                         player.pos.x -= 1;
-                        Map[player.pos.x][player.pos.y].onPlayer = true;
                         Turn += 1;
                     }
-                    else if (!(UpTile is Wall) && UpTile.onBox)
+                    else if (!(UpTile is Wall) && FindBlock(px - 1, py))
                     {
-                        if (UpUpTile != null && !(UpUpTile is Wall) && !UpUpTile.onBox )
+                        if (UpUpTile != null && !(UpUpTile is Wall) && !FindBlock(px-2, py))
                         {
-                            Map[player.pos.x-1][player.pos.y].onBox = false;
-                            Map[player.pos.x - 2][player.pos.y].onBox = true;
-                            Map[player.pos.x][player.pos.y].onPlayer = false;
+                            MoveBlock(px - 1, py, 'u');
                             player.pos.x -= 1;
-                            Map[player.pos.x][player.pos.y].onPlayer = true;
                             Turn += 1;
                         }
                     }
@@ -82,22 +77,17 @@ namespace Sokoban
                 if (DownTile == null) return;
                 else
                 {
-                    if (!(DownTile is Wall) && !DownTile.onBox)
+                    if (!(DownTile is Wall) && !FindBlock(px + 1, py))
                     {
-                        Map[player.pos.x][player.pos.y].onPlayer = false;
                         player.pos.x += 1;
-                        Map[player.pos.x][player.pos.y].onPlayer = true;
                         Turn += 1;
                     }
-                    else if (!(DownTile is Wall) && DownTile.onBox)
+                    else if (!(DownTile is Wall) && FindBlock(px + 1, py))
                     {
-                        if (DownDownTile != null && !(DownDownTile is Wall) && !DownDownTile.onBox)
+                        if (DownDownTile != null && !(DownDownTile is Wall) && !FindBlock(px+2, py))
                         {
-                            Map[player.pos.x + 1][player.pos.y].onBox = false;
-                            Map[player.pos.x + 2][player.pos.y].onBox = true;
-                            Map[player.pos.x][player.pos.y].onPlayer = false;
+                            MoveBlock(px + 1, py, 'd');
                             player.pos.x += 1;
-                            Map[player.pos.x][player.pos.y].onPlayer = true;
                             Turn += 1;
                         }
                     }
@@ -110,22 +100,17 @@ namespace Sokoban
                 if (LeftTile == null) return;
                 else
                 {
-                    if (!(LeftTile is Wall) && !LeftTile.onBox)
+                    if (!(LeftTile is Wall) && !FindBlock(px, py - 1))
                     {
-                        Map[player.pos.x][player.pos.y].onPlayer = false;
                         player.pos.y -= 1;
-                        Map[player.pos.x][player.pos.y].onPlayer = true;
                         Turn += 1;
                     }
-                    else if (!(LeftTile is Wall) && LeftTile.onBox)
+                    else if (!(LeftTile is Wall) && FindBlock(px, py - 1))
                     {
-                        if (LeftLeftTile != null && !(LeftLeftTile is Wall) && !LeftLeftTile.onBox)
+                        if (LeftLeftTile != null && !(LeftLeftTile is Wall) && !FindBlock(px, py-2))
                         {
-                            Map[player.pos.x][player.pos.y - 1].onBox = false;
-                            Map[player.pos.x][player.pos.y - 2].onBox = true;
-                            Map[player.pos.x][player.pos.y].onPlayer = false;
+                            MoveBlock(px, py-1, 'l');
                             player.pos.y -= 1;
-                            Map[player.pos.x][player.pos.y].onPlayer = true;
                             Turn += 1;
                         }
                     }
@@ -138,22 +123,17 @@ namespace Sokoban
                 if (RightTile == null) return;
                 else
                 {
-                    if (!(RightTile is Wall) && !RightTile.onBox)
+                    if (!(RightTile is Wall) && !FindBlock(px, py + 1))
                     {
-                        Map[player.pos.x][player.pos.y].onPlayer = false;
                         player.pos.y += 1;
-                        Map[player.pos.x][player.pos.y].onPlayer = true;
                         Turn += 1;
                     }
-                    else if (!(RightTile is Wall) && RightTile.onBox)
+                    else if (!(RightTile is Wall) && FindBlock(px, py + 1))
                     {
-                        if (RightRightTile != null && !(RightRightTile is Wall) && !RightRightTile.onBox)
+                        if (RightRightTile != null && !(RightRightTile is Wall) && !FindBlock(px, py+2))
                         {
-                            Map[player.pos.x][player.pos.y + 1].onBox = false;
-                            Map[player.pos.x][player.pos.y + 2].onBox = true;
-                            Map[player.pos.x][player.pos.y].onPlayer = false;
+                            MoveBlock(px, py + 1, 'r');
                             player.pos.y += 1;
-                            Map[player.pos.x][player.pos.y].onPlayer = true;
                             Turn += 1;
                         }
                     }
@@ -167,7 +147,7 @@ namespace Sokoban
             {
                 for (int j = 0 ; j < Col ; j++)
                 {
-                    if (Map[i][j] is Slot && !(Map[i][j] as Slot).onBox)
+                    if (Map[i,j] is Slot && !FindBlock(i, j))
                         return false;
                 }
             }
@@ -177,61 +157,108 @@ namespace Sokoban
         public Tile getTileByInt(int x, int y)
         {
             if (x < 0 || y < 0 || x >= Row || y >= Col) return null;
-            return Map[x][y];
+            return Map[x,y];
         }
 
         public Tile getTileByVector(Vector2i v)
         {
             if (v.x < 0 || v.y < 0 || v.x >= Row || v.y >= Col) return null;
-            return Map[v.x][v.y];
+            return Map[v.x,v.y];
         }
 
         public void ScanMap(int row, int col, String[] mapdata)
         {
             this.Row = row;
             this.Col = col;
-            Map = new Tile[row][];
-            for (int i = 0; i < row; i++) Map[i] = new Tile[col];
+            Map = new Tile[row,col];
 
             for (int i = 0; i < row; i++)
             {
                 for (int j = 0; j < col; j++)
                 {
                     char tile = mapdata[i][j];
-                    if (tile == 'X') Map[i][j] = new Wall();
-                    else if (tile == ' ') Map[i][j] = new Floor();
+                    if (tile == 'X') Map[i, j] = new Wall();
+                    else if (tile == ' ') Map[i, j] = new Floor();
                     else if (tile == 'P')
                     {
-                        Map[i][j] = new Floor(false, true);
+                        Map[i, j] = new Floor();
                         player = new Player(i, j);
-                        player.pos.x = i; player.pos.y = j;
                     }
-                    else if (tile == 'B') Map[i][j] = new Floor(true, false);
-                    else if (tile == 'o') Map[i][j] = new Slot();
-                    else if (tile == 'O') Map[i][j] = new Slot(true, false);
-                    else if (tile == 'p') Map[i][j] = new Slot(false, true);
+                    else if (tile == 'B')
+                    {
+                        Map[i, j] = new Floor();
+                        BlockList.Add(new Block(i, j));
+                    }
+                    else if (tile == 'o') Map[i, j] = new Slot();
+                    else if (tile == 'O')
+                    {
+                        Map[i, j] = new Slot();
+                        BlockList.Add(new Block(i, j));
+                    }
+                    else if (tile == 'p') {
+                        Map[i, j] = new Slot();
+                        player = new Player(i, j);
+                    }
                 }
             }
 
         }
 
+        public bool FindBlock(int x, int y)
+        {
+            foreach (Block b in BlockList)
+            {
+                if (b.pos.x == x && b.pos.y == y) return true;
+            }
+            return false;
+        }
+
+        public void MoveBlock(int x, int y, char dir, int amount = 1)
+        {
+            foreach(Block b in BlockList)
+            {
+                if (b.pos.x==x && b.pos.y == y)
+                {
+                    if (dir == 'u')
+                    {
+                        b.pos.x -= amount;
+                    }
+                    else if (dir == 'd')
+                    {
+                        b.pos.x += amount;
+                    }
+                    else if (dir == 'l')
+                    {
+                        b.pos.y -= amount;
+                    }
+                    else if (dir == 'r')
+                    {
+                        b.pos.y += amount;
+                    }
+                }
+            }
+        }
+
+        private bool FindPlayer(int x, int y) { return (player.pos.x == x && player.pos.y == y); }
+
         public void PrintMap()
         {
+            Console.WriteLine("SokobanGame!");
             for (int i = 0; i < Row; i++)
             {
                 for (int j = 0; j < Col; j++)
                 {
-                    if (Map[i][j] is Wall) Console.Write("X");
-                    else if (Map[i][j] is Floor)
+                    if (Map[i,j] is Wall) Console.Write("X");
+                    else if (Map[i,j] is Floor)
                     {
-                        if ((Map[i][j] as Floor).onPlayer) Console.Write("P");
-                        else if ((Map[i][j] as Floor).onBox) Console.Write("B");
+                        if (FindPlayer(i, j)) Console.Write("P");
+                        else if (FindBlock(i, j)) Console.Write("B");
                         else Console.Write(" ");
                     }
-                    else if (Map[i][j] is Slot)
+                    else if (Map[i,j] is Slot)
                     {
-                        if ((Map[i][j] as Slot).onPlayer) Console.Write("p");
-                        else if ((Map[i][j] as Slot).onBox) Console.Write("O");
+                        if (FindPlayer(i, j)) Console.Write("p");
+                        else if (FindBlock(i, j)) Console.Write("O");
                         else Console.Write("o");
                     }
                 }
@@ -239,5 +266,8 @@ namespace Sokoban
             }
             Console.WriteLine("Turn Number: {0}", Turn);
         }
+
     }
+
+   
 }
