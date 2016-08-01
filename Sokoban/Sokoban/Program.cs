@@ -10,8 +10,9 @@ namespace Sokoban
     {
         static void Main(string[] args)
         {
-            SokobanGame s = new SokobanGame();
-            s.Run();
+            GameStateManager gsm = new GameStateManager();
+            gsm.LoadMap("maps.txt");
+            gsm.SelectMap();
         }
     }
 }

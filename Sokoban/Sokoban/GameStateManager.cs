@@ -21,11 +21,33 @@ namespace Sokoban
                 if (RawMapData[line].Length == 0) continue;
                 else
                 {
+                    int row = 0;
+                    int col = 0;
+                    SingleMap = new string[MAXHEIGHT];
                     while (!(RawMapData[line][0] == ';'))
-                    {
-                        SingleMap = new string[MAXHEIGHT];
-                    }                 
+                    {                   
+                        if (RawMapData[line].Length > col) col = RawMapData[line].Length;
+                        SingleMap[row] = RawMapData[line];
+                        row += 1;
+                        line += 1;
+                    }
+                    line += 1;
+                    Games.Add(new SokobanGame(row, col, SingleMap));
                 }
+            }
+        }
+
+        public void SelectMap()
+        {
+            Console.Write("Choose Level: ");
+            try
+            {
+                int level = Int32.Parse(Console.ReadLine());
+                Games.ElementAt(level - 1).Run();
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }

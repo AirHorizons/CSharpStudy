@@ -15,9 +15,9 @@ namespace Sokoban
         public int Col { get; private set; }
         public int Turn { get; private set; }
 
-        public SokobanGame(string[] MapData)
+        public SokobanGame(int row, int col, string[] MapData)
         {
-            ScanMap(30, 30, MapData);
+            ScanMap(row, col, MapData);
         }
 
 
@@ -165,7 +165,7 @@ namespace Sokoban
             return Map[v.x,v.y];
         }
 
-        public void ScanMap(int row, int col, String[] mapdata)
+        public void ScanMap(int row, int col, string[] mapdata)
         {
             this.Row = row;
             this.Col = col;
@@ -173,7 +173,7 @@ namespace Sokoban
 
             for (int i = 0; i < row; i++)
             {
-                for (int j = 0; j < col; j++)
+                for (int j = 0; j < mapdata[i].Length; j++)
                 {
                     char tile = mapdata[i][j];
                     if (tile == '#') Map[i, j] = new Wall();
