@@ -18,7 +18,14 @@ namespace Sokoban
             RawMapData = System.IO.File.ReadAllLines(filename);
             for (int line = 0; line < RawMapData.Length; line++)
             {
-                SingleMap = new string[MAXHEIGHT];
+                if (RawMapData[line].Length == 0) continue;
+                else
+                {
+                    while (!(RawMapData[line][0] == ';'))
+                    {
+                        SingleMap = new string[MAXHEIGHT];
+                    }                 
+                }
             }
         }
     }

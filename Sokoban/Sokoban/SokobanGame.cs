@@ -17,7 +17,7 @@ namespace Sokoban
 
         public SokobanGame(string[] MapData)
         {
-            ScanMap(5, 7, MapData);
+            ScanMap(30, 30, MapData);
         }
 
 
