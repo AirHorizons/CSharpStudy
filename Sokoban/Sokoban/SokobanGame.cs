@@ -15,10 +15,9 @@ namespace Sokoban
         public int Col { get; private set; }
         public int Turn { get; private set; }
 
-        public SokobanGame()
+        public SokobanGame(string[] MapData)
         {
-            string[] testmap = { "XXXXXXX", "X    oX", "XPBB  X", "X    oX", "XXXXXXX" };
-            ScanMap(5, 7, testmap);
+            ScanMap(5, 7, MapData);
         }
 
 
@@ -177,20 +176,20 @@ namespace Sokoban
                 for (int j = 0; j < col; j++)
                 {
                     char tile = mapdata[i][j];
-                    if (tile == 'X') Map[i, j] = new Wall();
+                    if (tile == '#') Map[i, j] = new Wall();
                     else if (tile == ' ') Map[i, j] = new Floor();
-                    else if (tile == 'P')
+                    else if (tile == '@')
                     {
                         Map[i, j] = new Floor();
                         player = new Player(i, j);
                     }
-                    else if (tile == 'B')
+                    else if (tile == '$')
                     {
                         Map[i, j] = new Floor();
                         BlockList.Add(new Block(i, j));
                     }
-                    else if (tile == 'o') Map[i, j] = new Slot();
-                    else if (tile == 'O')
+                    else if (tile == '.') Map[i, j] = new Slot();
+                    else if (tile == '*')
                     {
                         Map[i, j] = new Slot();
                         BlockList.Add(new Block(i, j));
@@ -248,18 +247,18 @@ namespace Sokoban
             {
                 for (int j = 0; j < Col; j++)
                 {
-                    if (Map[i,j] is Wall) Console.Write("X");
+                    if (Map[i,j] is Wall) Console.Write("#");
                     else if (Map[i,j] is Floor)
                     {
-                        if (FindPlayer(i, j)) Console.Write("P");
-                        else if (FindBlock(i, j)) Console.Write("B");
+                        if (FindPlayer(i, j)) Console.Write("@");
+                        else if (FindBlock(i, j)) Console.Write("$");
                         else Console.Write(" ");
                     }
                     else if (Map[i,j] is Slot)
                     {
-                        if (FindPlayer(i, j)) Console.Write("p");
-                        else if (FindBlock(i, j)) Console.Write("O");
-                        else Console.Write("o");
+                        if (FindPlayer(i, j)) Console.Write("@");
+                        else if (FindBlock(i, j)) Console.Write("*");
+                        else Console.Write(".");
                     }
                 }
                 Console.Write("\n");
