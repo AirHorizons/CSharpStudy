@@ -14,10 +14,12 @@ namespace Sokoban
         public int Row { get; private set; }
         public int Col { get; private set; }
         public int Turn { get; private set; }
+        public int Level { get; private set; }
 
-        public SokobanGame(int row, int col, string[] MapData)
+        public SokobanGame(int row, int col, string[] MapData, int level)
         {
             ScanMap(row, col, MapData);
+            Level = level;
         }
 
 
@@ -43,7 +45,6 @@ namespace Sokoban
 
         public void Move(char dir)
         {
-            Console.Clear();
             int px = player.pos.x;
             int py = player.pos.y;
             if (dir == 'u')
@@ -242,7 +243,8 @@ namespace Sokoban
 
         public void PrintMap()
         {
-            Console.WriteLine("SokobanGame!");
+            Console.Clear();
+            Console.WriteLine("SokobanGame! Level: {0}", Level);
             for (int i = 0; i < Row; i++)
             {
                 for (int j = 0; j < Col; j++)

@@ -15,6 +15,7 @@ namespace Sokoban
 
         public void LoadMap(string filename)
         {
+            int level = 1;
             RawMapData = System.IO.File.ReadAllLines(filename);
             for (int line = 0; line < RawMapData.Length; line++)
             {
@@ -32,23 +33,37 @@ namespace Sokoban
                         line += 1;
                     }
                     line += 1;
-                    Games.Add(new SokobanGame(row, col, SingleMap));
+                    Games.Add(new SokobanGame(row, col, SingleMap, level));
+                    level += 1;
                 }
             }
         }
 
-        public void SelectMap()
+        public int SelectMap(int start = 0)
         {
-            Console.Write("Choose Level: ");
-            try
+            if (start != 0)
             {
-                int level = Int32.Parse(Console.ReadLine());
-                Games.ElementAt(level - 1).Run();
+                Games.ElementAt(start).Run();
+                return start + 1;
             }
-            catch (FormatException e)
+            else
             {
-                Console.WriteLine(e.Message);
+                Console.Write("Choose Level: ");
+                try
+                {                   
+                    int level = Int32.Parse(Console.ReadLine());
+                    Console.Clear();
+                    if (level == 0) return 0;
+                    Games.ElementAt(level - 1).Run();
+                    return level;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 0;
+                }
             }
+           
         }
     }
 }

@@ -12,7 +12,13 @@ namespace Sokoban
         {
             GameStateManager gsm = new GameStateManager();
             gsm.LoadMap("maps.txt");
-            gsm.SelectMap();
+            int level = gsm.SelectMap();
+            if (level == 0) return;
+            else
+            {
+                while (level < 90)
+                    level = gsm.SelectMap(level);
+            }
         }
     }
 }
